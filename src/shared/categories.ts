@@ -1,0 +1,15 @@
+export const categories = [
+  { title:'Factures'},
+  { title:'Vetements'},
+  { title:'Divertissement'},
+  { title:'Repas', subCategory: ['Petit-dejeuner','dejeuner','dinner','autre']},
+  { title:'Courses', subCategory: ['Viandes','Fruits-Legumes','Boissons','Produits industiel','autre']},
+  { title:'Sante'},
+  { title:'En-cas'},
+  { title:'Equipements'},
+  { title:'transport'},
+  { title:'Enseignement'},
+  { title:'Bien consommable quotidien'},
+  { title:'Loisirs et culture'},
+  { title:'autres biens et services'},
+]

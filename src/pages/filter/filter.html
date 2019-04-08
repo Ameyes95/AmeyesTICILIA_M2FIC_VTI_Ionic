@@ -1,0 +1,75 @@
+<!-- Page affichant l'historique des dépenses via un filtre  -->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Historique</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-segment [(ngModel)]="searchType">
+    <ion-segment-button value="basic">
+      Simple
+    </ion-segment-button>
+    <ion-segment-button value="advanced">
+      Avancé
+    </ion-segment-button>
+  </ion-segment>
+  <div [ngSwitch]="searchType">
+    <ion-list *ngSwitchCase="'basic'" no-margin>
+      <ion-item>
+        <ion-label floating>Mois</ion-label>
+        <ion-datetime
+          #expenseMonth 
+          (ionChange)="loadBasic()" 
+          name="month" 
+          displayFormat="MMM YYYY" 
+          pickerFormat="MMM YYYY" 
+          (swipeRight)="addMonth(filter.month, expenseMonth)"
+          (swipeLeft)="subMonth(filter.month, expenseMonth)"
+          [(ngModel)]="filter.month"></ion-datetime>
+      </ion-item>
+
+      <button margin-right ion-button color="secondary" float-end (click)="navCtrl.push('SummaryChartPage')" type="button">Graphique des dépenses</button>
+
+
+    </ion-list>
+
+
+    <ion-list *ngSwitchCase="'advanced'" no-margin>
+      <ion-item>
+        <ion-label floating>Date de départ</ion-label>
+        <ion-datetime (ionChange)="loadResults({})" name="startDate" displayFormat="MMM DD, YYYY" pickerFormat="MMM DD, YYYY"
+          [(ngModel)]="filter.startDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Date de fin</ion-label>
+        <ion-datetime (ionChange)="loadResults({})" name="endDate" displayFormat="MMM DD, YYYY" pickerFormat="MMM DD, YYYY"
+          [(ngModel)]="filter.endDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Choisir une catégorie</ion-label>
+        <ion-select interface="popover" required name="category" [(ngModel)]="filter.category">
+          <ion-option [value]="cat" (ionSelect)="loadResults({})" *ngFor="let cat of categories">{{cat.title | titlecase}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+  </div>
+
+  
+  <ion-list padding-horizontal>
+      <h4>Total: {{total | number: '2.2-2'}}</h4>
+
+      <expense-item 
+      [expense]="item"
+      [readonly]="true"
+      *ngFor="let item of expenses$ | async"></expense-item>
+
+    <!-- si on souhaite supprimer les éléments de dépenses dans l'historique, on remplace la propriété readonly par
+        (onDelete)="delete($event)" -->
+
+  </ion-list>
+</ion-content>

@@ -1,0 +1,36 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Dépenses</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding-vertical>
+  <ion-list>
+    <ion-item>
+      <ion-label stacked>Mois :</ion-label>
+
+      <ion-datetime 
+      #expenseMonth
+      (ionChange)="loadBasic()"
+      name="month" 
+      displayFormat="MMM YYYY"
+      pickerFormat="MMM YYYY"
+      [(ngModel)]="month" 
+      (swipeRight)="addMonth(month, expenseMonth)"
+      (swipeLeft)="subMonth(month, expenseMonth)"
+      placeholder="Select Month"></ion-datetime>
+
+      <!-- ionChange = loadBasic car le graphique est basé sur les dépenses d'un mois uniquement comme la plupart des applications du même type (banques etc) -->
+
+    </ion-item>
+
+  </ion-list>
+
+  <div #container></div>
+
+  <div><h4>Total : {{total}} &euro;</h4></div>
+
+</ion-content>
